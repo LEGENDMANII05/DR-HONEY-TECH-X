@@ -6,9 +6,15 @@ export async function GET(_req: Request, { params }: { params: Promise<{ resourc
   try {
     await requireAdmin();
     const { resource } = await params;
-    if (resource === 'services') return NextResponse.json(await prisma.service.findMany({ orderBy: { displayOrder: 'asc' } }));
-    if (resource === 'projects') return NextResponse.json(await prisma.project.findMany({ orderBy: { displayOrder: 'asc' } }));
-    if (resource === 'promotions') return NextResponse.json(await prisma.promotion.findMany({ orderBy: { displayOrder: 'asc' } }));
+    if (resource === 'services') {
+      return NextResponse.json(await prisma.service.findMany({ orderBy: { displayOrder: 'asc' } }));
+    }
+    if (resource === 'projects') {
+      return NextResponse.json(await prisma.project.findMany({ orderBy: { displayOrder: 'asc' } }));
+    }
+    if (resource === 'promotions') {
+      return NextResponse.json(await prisma.promotion.findMany({ orderBy: { displayOrder: 'asc' } }));
+    }
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   } catch {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -21,9 +27,15 @@ export async function POST(req: Request, { params }: { params: Promise<{ resourc
     const resource = (await params).resource;
     const body = await req.json();
     delete body.id;
-    if (resource === 'services') return NextResponse.json(await prisma.service.create({ data: { title: body.title, slug: body.slug, shortDescription: body.shortDescription || '', fullDescription: body.fullDescription || '', icon: body.icon || null, imageUrl: body.imageUrl || null, published: body.published !== false, displayOrder: Number(body.displayOrder) || 0 } }), { status: 201 });
-    if (resource === 'projects') return NextResponse.json(await prisma.project.create({ data: { title: body.title, slug: body.slug, description: body.description || '', imageUrl: body.imageUrl || null, url: body.url || null, category: body.category || null, technologies: body.technologies || [], published: body.published !== false, displayOrder: Number(body.displayOrder) || 0 } }), { status: 201 });
-    if (resource === 'promotions') return NextResponse.json(await prisma.promotion.create({ data: { title: body.title, description: body.description || '', imageUrl: body.imageUrl || null, ctaText: body.ctaText || null, ctaUrl: body.ctaUrl || null, published: body.published !== false, displayOrder: Number(body.displayOrder) || 0 } }), { status: 201 });
+    if (resource === 'services') {
+      return NextResponse.json(await prisma.service.create({ data: { title: body.title, slug: body.slug, shortDescription: body.shortDescription || '', fullDescription: body.fullDescription || '', icon: body.icon || null, imageUrl: body.imageUrl || null, published: body.published !== false, displayOrder: Number(body.displayOrder) || 0 } }), { status: 201 });
+    }
+    if (resource === 'projects') {
+      return NextResponse.json(await prisma.project.create({ data: { title: body.title, slug: body.slug, description: body.description || '', imageUrl: body.imageUrl || null, url: body.url || null, category: body.category || null, technologies: body.technologies || [], published: body.published !== false, displayOrder: Number(body.displayOrder) || 0 } }), { status: 201 });
+    }
+    if (resource === 'promotions') {
+      return NextResponse.json(await prisma.promotion.create({ data: { title: body.title, description: body.description || '', imageUrl: body.imageUrl || null, ctaText: body.ctaText || null, ctaUrl: body.ctaUrl || null, published: body.published !== false, displayOrder: Number(body.displayOrder) || 0 } }), { status: 201 });
+    }
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   } catch {
     return NextResponse.json({ error: 'Invalid data' }, { status: 400 });

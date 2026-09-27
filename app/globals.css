@@ -148,6 +148,9 @@ button, input, textarea, select { font: inherit; }
 
 .hero-shell { isolation:isolate; overflow:visible; }
 .hero-copy { width:min(44%, 520px); position:relative; z-index:2; padding-top:72px; }
+.hero-kicker { box-shadow:0 0 22px rgba(64,183,255,.18), inset 0 1px rgba(255,255,255,.44); text-shadow:0 0 12px rgba(32,124,232,.22); }
+.hero-title { font-weight:950; text-shadow:0 0 18px rgba(28,126,239,.24), 0 3px 0 rgba(255,255,255,.16); }
+.hero-subtitle { text-shadow:0 0 16px rgba(18,133,241,.46); }
 .hero-art { position:absolute; top:28px; right:-3%; bottom:-20px; width:59%; z-index:0; background:url('/hero-character.png') center top / contain no-repeat; opacity:.96; filter:saturate(1.05) contrast(1.03) drop-shadow(0 0 34px rgba(73,190,255,.30)) drop-shadow(0 22px 45px rgba(44,116,214,.16)); pointer-events:none; }
 .social-links { display:flex; flex-wrap:wrap; gap:9px; justify-content:flex-end; }
 .social-link { width:46px; height:46px; display:grid; place-items:center; border-radius:15px; border:1px solid var(--line); background:rgba(255,255,255,.28); color:var(--accent); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); transition:transform .2s ease, box-shadow .2s ease, background .2s ease; }
@@ -160,8 +163,8 @@ button, input, textarea, select { font: inherit; }
 @media (max-width: 700px) {
   .hero-shell { min-height:104vh; padding-top:128px; justify-content:flex-start; }
   .hero-copy { width:100%; max-width:none; padding-top:0; }
-  .hero-kicker { position:absolute; top:18px; left:20px; z-index:3; }
-  .hero-title { margin-top:300px !important; max-width:320px; }
+  .hero-kicker { position:absolute; top:-55px; left:20px; z-index:3; }
+  .hero-title { margin-top:220px !important; max-width:320px; }
   .hero-copy h1 { font-size:clamp(2.25rem, 9.8vw, 3.55rem); line-height:1.02; }
   .hero-copy p { font-size:.86rem; line-height:1.55; }
   .hero-copy .glass-button { font-size:.74rem; padding-inline:13px; }
@@ -170,8 +173,8 @@ button, input, textarea, select { font: inherit; }
 }
 @media (max-width: 420px) {
   .hero-copy { width:100%; max-width:none; padding-top:0; }
-  .hero-kicker { top:14px; left:20px; }
-  .hero-title { margin-top:270px !important; max-width:290px; }
+  .hero-kicker { top:-55px; left:20px; }
+  .hero-title { margin-top:195px !important; max-width:290px; }
   .hero-copy h1 { font-size:clamp(2.05rem, 10.2vw, 2.8rem); }
   .hero-copy .reveal-up:first-child { font-size:.58rem; padding:7px 10px; }
   .hero-art { right:-8%; width:86%; }

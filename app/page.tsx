@@ -12,8 +12,8 @@ export default async function Home(){
   <section className="hero-shell mx-auto flex min-h-[88vh] max-w-6xl flex-col justify-center px-5 py-28 relative">
    <div className="hero-art" aria-hidden="true" />
    <div className="hero-copy relative z-10">
-    <div className="reveal-up inline-flex items-center gap-2 rounded-full border border-blue-300/20 bg-white/30 px-4 py-2 text-sm font-bold text-blue-700 backdrop-blur-xl dark:text-cyan-200"><Sparkles size={16}/> BUILDING INTELLIGENCE. SHAPING THE FUTURE.</div>
-    <h1 className="reveal-up reveal-delay-1 mt-7 text-5xl font-black tracking-tight sm:text-7xl">{hero?.title||'DR HONEY TECH X'}</h1>
+    <div className="hero-kicker reveal-up inline-flex items-center gap-2 rounded-full border border-blue-300/20 bg-white/30 px-4 py-2 text-sm font-bold text-blue-700 backdrop-blur-xl dark:text-cyan-200"><Sparkles size={16}/> BUILDING INTELLIGENCE. SHAPING THE FUTURE.</div>
+    <h1 className="hero-title reveal-up reveal-delay-1 mt-7 text-5xl font-black tracking-tight sm:text-7xl">{hero?.title||'DR HONEY TECH X'}</h1>
     <p className="reveal-up reveal-delay-2 mt-5 max-w-2xl text-lg font-semibold text-blue-700 dark:text-cyan-200">{hero?.subtitle||'WHATSAPP BOT DEVELOPER • AI • TECHNOLOGY'}</p>
     <p className="reveal-up reveal-delay-3 mt-4 max-w-2xl leading-7 text-slate-600 dark:text-slate-300">{hero?.description||'Professional WhatsApp bots, AI automation, websites and digital solutions built with a clean, modern engineering mindset.'}</p>
     <div className="reveal-up reveal-delay-4 mt-8 flex flex-wrap gap-3"><GlassButton href={bot?.externalUrl||'https://dr-honey-mini.vercel.app/'} external>OPEN DR-HONEY-MINI <ArrowUpRight size={18}/></GlassButton><GlassButton href="/contact" variant="secondary">CONTACT DR HONEY</GlassButton></div>

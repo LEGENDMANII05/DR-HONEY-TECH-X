@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { EllipsisVertical, X, Home, UserRound, Bot, Wrench, FolderKanban, Megaphone, MessageCircle, ShieldCheck, Sun, Moon } from 'lucide-react';
+import { EllipsisVertical, X, Home, UserRound, Bot, Wrench, FolderKanban, Megaphone, MessageCircle, Star, ShieldCheck, Sun, Moon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 const items = [
@@ -12,6 +12,7 @@ const items = [
   ['Projects', '/projects', FolderKanban],
   ['Promotions', '/promotions', Megaphone],
   ['Contact', '/contact', MessageCircle],
+  ['Reviews', '/reviews', Star],
   ['Admin Login', '/admin/login', ShieldCheck],
 ] as const;
 

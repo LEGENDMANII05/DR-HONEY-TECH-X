@@ -7,3 +7,5 @@ export const getServices=()=>prisma.service.findMany({where:{published:true},ord
 export const getProjects=()=>prisma.project.findMany({where:{published:true},orderBy:{displayOrder:'asc'}});
 export const getPromotions=()=>prisma.promotion.findMany({where:{published:true},orderBy:{displayOrder:'asc'}});
 export const getSocialLinks=()=>prisma.socialLink.findMany({where:{enabled:true},orderBy:{displayOrder:'asc'}});
+
+export const getReviews=()=>prisma.review.findMany({where:{published:true},orderBy:{createdAt:'desc'},take:30});

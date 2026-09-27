@@ -158,3 +158,18 @@ model Media {
   alt       String?
   createdAt DateTime @default(now())
 }
+
+model Review {
+  id        String   @id @default(cuid())
+  name      String
+  email     String?
+  rating    Int
+  title     String?
+  comment   String
+  page      String?
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, createdAt])
+}

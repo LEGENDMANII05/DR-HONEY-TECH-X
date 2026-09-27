@@ -112,3 +112,10 @@ After you successfully log in, you can change the password from **Admin → Sett
 ### If login still fails
 
 Open `/admin/login` and inspect the network response for `/api/admin/login`. The endpoint now returns a non-secret diagnostic code such as `ADMIN_BACKEND_UNAVAILABLE`, `AUTH_SECRET_INVALID`, `ADMIN_ENV_MISSING`, or `INVALID_CREDENTIALS`. Check the Vercel Function Logs and the corresponding environment variable.
+
+## Hero artwork update
+
+The hero now uses a clean transparent character cutout at `public/hero-character.png` (and the legacy `public/hero-reference.webp` has been replaced with the same transparent artwork). The artwork contains no website text, so the HTML/UI copy is rendered only once by the page. Desktop and mobile hero layout keeps the character on the right and the headline/copy on the left so text does not sit over the character's face or hair. The fixed top three-dot menu remains above the hero area.
+
+## Mobile Reviews
+The bottom-right navigation item is now **Reviews** instead of Menu. The top-right three-dot menu remains the site navigation menu. `/reviews` provides a glassmorphism review form with 1–5 star ratings and optional area selection (Website, Services, Projects, Bot, Contact, Other). Reviews are stored in PostgreSQL through `/api/reviews` and displayed on the public page.

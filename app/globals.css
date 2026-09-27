@@ -12,7 +12,9 @@
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; color: var(--text); background: radial-gradient(circle at 8% 8%, rgba(147,197,253,.42), transparent 28%), radial-gradient(circle at 92% 16%, rgba(196,181,253,.34), transparent 26%), linear-gradient(135deg, #f8fbff 0%, #eef5ff 48%, #f8f7ff 100%); font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; }
+body { position: relative; margin: 0; color: var(--text); background: linear-gradient(135deg, #f8fbff 0%, #eef5ff 48%, #f8fbff 100%); font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; }
+body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(90deg, rgba(248,251,255,.98) 0%, rgba(248,251,255,.84) 35%, rgba(248,251,255,.28) 100%), url('/gojo-aura.webp'); background-repeat: no-repeat; background-position: center, right 10% center; background-size: auto, min(76vw, 760px) auto; opacity: .86; }
+body > * { position: relative; z-index: 1; }
 a { text-decoration: none; color: inherit; }
 button,input,textarea,select { font: inherit; }
 .glass { background: var(--panel); border: 1px solid rgba(255,255,255,.72); backdrop-filter: blur(22px) saturate(145%); -webkit-backdrop-filter: blur(22px) saturate(145%); box-shadow: 0 20px 55px rgba(83,105,145,.12), inset 0 1px rgba(255,255,255,.9); }
@@ -28,11 +30,7 @@ button,input,textarea,select { font: inherit; }
 .text-slate-300 { color: #475569 !important; }
 .text-slate-400 { color: #64748b !important; }
 .text-slate-200 { color: #334155 !important; }
-.ambient-orb { position: absolute; width: 16rem; height: 16rem; border-radius: 999px; filter: blur(2px); opacity: .5; pointer-events: none; animation: drift 11s ease-in-out infinite alternate; }
-.ambient-orb-blue { background: radial-gradient(circle, rgba(96,165,250,.3), transparent 68%); }
 .hero-shell { isolation: isolate; }
-.hero-bg-art { position: absolute; z-index: 0; inset: 0; pointer-events: none; background-image: linear-gradient(90deg, rgba(244,248,255,.96) 0%, rgba(244,248,255,.72) 40%, rgba(244,248,255,.12) 100%), url('/gojo-aura.webp'); background-repeat: no-repeat; background-position: center, right 7% center; background-size: auto, min(54vw, 520px) auto; opacity: .92; }
-@keyframes drift { from { transform: translate3d(-12px,8px,0) scale(.94); } to { transform: translate3d(18px,-14px,0) scale(1.06); } }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 main > div > section { animation: rise .7s both; }
 main > div > section:nth-child(2) { animation-delay: .08s; }
@@ -43,8 +41,8 @@ main > div > section:nth-child(4) { animation-delay: .24s; }
 
 .theme-toggle { position: fixed; top: 1rem; right: 4.5rem; z-index: 50; display: inline-flex; align-items: center; gap: .45rem; min-height: 40px; padding: 0 .8rem; border: 1px solid rgba(255,255,255,.72); border-radius: 999px; color: #334155; background: rgba(255,255,255,.58); backdrop-filter: blur(18px); box-shadow: 0 10px 28px rgba(83,105,145,.14), inset 0 1px rgba(255,255,255,.9); font-size: .75rem; font-weight: 800; transition: transform .3s ease, background .3s ease, box-shadow .3s ease; }
 .theme-toggle:hover { transform: translateY(-2px) rotate(-2deg); background: rgba(255,255,255,.86); box-shadow: 0 14px 36px rgba(59,130,246,.2); }
-html[data-theme='dark'] body { color: #e8f0ff; background: radial-gradient(circle at 8% 8%, rgba(37,99,235,.3), transparent 28%), radial-gradient(circle at 92% 16%, rgba(96,165,250,.18), transparent 26%), linear-gradient(135deg,#07101f 0%,#0d1730 52%,#101d35 100%); }
-html[data-theme='dark'] .hero-bg-art { background-image: linear-gradient(90deg, rgba(7,16,31,.96) 0%, rgba(7,16,31,.72) 42%, rgba(7,16,31,.1) 100%), url('/gojo-aura.webp'); }
+html[data-theme='dark'] body { color: #e8f0ff; background: linear-gradient(135deg,#07101f 0%,#0d1730 52%,#101d35 100%); }
+html[data-theme='dark'] body::before { background-image: linear-gradient(90deg, rgba(7,16,31,.98) 0%, rgba(7,16,31,.84) 35%, rgba(7,16,31,.28) 100%), url('/gojo-aura.webp'); opacity: .72; }
 html[data-theme='dark'] .glass { background: rgba(17,28,52,.62); border-color: rgba(148,163,184,.2); box-shadow: 0 20px 55px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.1); }
 html[data-theme='dark'] .glass-hover:hover { background: rgba(30,45,78,.76); border-color: rgba(96,165,250,.48); box-shadow: 0 28px 70px rgba(0,0,0,.35), 0 0 0 4px rgba(96,165,250,.12); }
 html[data-theme='dark'] .theme-toggle { color: #e5edff; background: rgba(17,28,52,.72); border-color: rgba(148,163,184,.3); box-shadow: 0 10px 28px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.1); }
@@ -57,4 +55,4 @@ html[data-theme='dark'] .ios-nav-item { color: #a9b9d1; }
 html[data-theme='dark'] .ios-nav-active { color: #bfdbfe; background: rgba(30,64,175,.42); border-color: rgba(147,197,253,.28); box-shadow: 0 8px 28px rgba(37,99,235,.3), inset 0 1px rgba(255,255,255,.14), 0 0 0 3px rgba(96,165,250,.12); }
 html[data-theme='dark'] .ios-nav-active::after { background: #93c5fd; }
 @media (max-width: 480px) { .theme-toggle { right: 4rem; min-width: 40px; justify-content: center; padding: 0; } .theme-toggle span { display: none; } }
-@media (max-width: 767px) { .hero-bg-art { background-position: center, center 28%; background-size: auto, min(88vw, 390px) auto; opacity: .72; } }
+@media (max-width: 767px) { body::before { background-position: center, center 20%; background-size: auto, min(100vw, 470px) auto; opacity: .5; } }

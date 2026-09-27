@@ -8,7 +8,6 @@ export default async function Home(){
   const [hero,services,projects,bot]=await Promise.all([getHero(),getServices(),getProjects(),getBot()]);
   return <div>
     <section className="hero-shell relative mx-auto flex min-h-[78vh] max-w-6xl flex-col justify-center overflow-hidden px-5 py-24 lg:min-h-[84vh]">
-      <div className="hero-bg-art" aria-hidden="true"/><span className="ambient-orb ambient-orb-blue -left-16 top-24"/>
       <div className="relative z-10 max-w-3xl">
         <div className="mb-5 flex items-center gap-2 text-sm font-semibold text-blue-600"><span className="h-2 w-2 animate-pulse rounded-full bg-blue-500 shadow-[0_0_18px_#60a5fa]"/>TECHNOLOGY • AUTOMATION • AI</div>
         <h1 className="max-w-4xl text-5xl font-black tracking-tight sm:text-7xl">{hero?.title||'DR HONEY TECH X'}</h1>

@@ -1,8 +1,75 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth/admin';
 import { prisma } from '@/lib/db/prisma';
-function model(resource:string){if(resource==='services')return prisma.service;if(resource==='projects')return prisma.project;if(resource==='promotions')return prisma.promotion;return null}
-export async function GET(_req:Request,{params}:{params:Promise<{resource:string}>}){try{await requireAdmin();const m=model((await params).resource);if(!m)return NextResponse.json({error:'Not found'},{status:404});return NextResponse.json(await m.findMany({orderBy:{displayOrder:'asc'}}))}catch{return NextResponse.json({error:'Unauthorized'},{status:401})}}
-export async function POST(req:Request,{params}:{params:Promise<{resource:string}>}){try{await requireAdmin();const r=(await params).resource;const b=await req.json();delete b.id;if(r==='services')return NextResponse.json(await prisma.service.create({data:{title:b.title,slug:b.slug,shortDescription:b.shortDescription||'',fullDescription:b.fullDescription||'',icon:b.icon||null,imageUrl:b.imageUrl||null,published:b.published!==false,displayOrder:Number(b.displayOrder)||0}}),{status:201});if(r==='projects')return NextResponse.json(await prisma.project.create({data:{title:b.title,slug:b.slug,description:b.description||'',imageUrl:b.imageUrl||null,url:b.url||null,category:b.category||null,technologies:b.technologies||[],published:b.published!==false,displayOrder:Number(b.displayOrder)||0}}),{status:201});if(r==='promotions')return NextResponse.json(await prisma.promotion.create({data:{title:b.title,description:b.description||'',imageUrl:b.imageUrl||null,ctaText:b.ctaText||null,ctaUrl:b.ctaUrl||null,published:b.published!==false,displayOrder:Number(b.displayOrder)||0}}),{status:201});return NextResponse.json({error:'Not found'},{status:404})}catch{return NextResponse.json({error:'Invalid data'},{status:400})}}
-export async function PATCH(req:Request,{params}:{params:Promise<{resource:string}>}){try{await requireAdmin();const r=(await params).resource;const b=await req.json();const {id,...d}=b;if(typeof id!=='string')return NextResponse.json({error:'Missing id'},{status:400});const data={...d,displayOrder:Number(d.displayOrder)||0};if(r==='services')return NextResponse.json(await prisma.service.update({where:{id},data}));if(r==='projects')return NextResponse.json(await prisma.project.update({where:{id},data}));if(r==='promotions')return NextResponse.json(await prisma.promotion.update({where:{id},data}));return NextResponse.json({error:'Not found'},{status:404})}catch{return NextResponse.json({error:'Update failed'},{status:400})}}
-export async function DELETE(req:Request,{params}:{params:Promise<{resource:string}>}){try{await requireAdmin();const r=(await params).resource;const {id}=await req.json();if(r==='services')await prisma.service.delete({where:{id}});else if(r==='projects')await prisma.project.delete({where:{id}});else if(r==='promotions')await prisma.promotion.delete({where:{id}});else return NextResponse.json({error:'Not found'},{status:404});return NextResponse.json({ok:true})}catch{return NextResponse.json({error:'Delete failed'},{status:400})}}
+
+export async function GET(_req: Request, { params }: { params: Promise<{ resource: string }> }) {
+  try {
+    await requireAdmin();
+    const { resource } = await params;
+    if (resource === 'services') {
+      return NextResponse.json(await prisma.service.findMany({ orderBy: { displayOrder: 'asc' } }));
+    }
+    if (resource === 'projects') {
+      return NextResponse.json(await prisma.project.findMany({ orderBy: { displayOrder: 'asc' } }));
+    }
+    if (resource === 'promotions') {
+      return NextResponse.json(await prisma.promotion.findMany({ orderBy: { displayOrder: 'asc' } }));
+    }
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  } catch {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+}
+
+export async function POST(req: Request, { params }: { params: Promise<{ resource: string }> }) {
+  try {
+    await requireAdmin();
+    const resource = (await params).resource;
+    const body = await req.json();
+    delete body.id;
+    if (resource === 'services') {
+      return NextResponse.json(await prisma.service.create({ data: { title: body.title, slug: body.slug, shortDescription: body.shortDescription || '', fullDescription: body.fullDescription || '', icon: body.icon || null, imageUrl: body.imageUrl || null, published: body.published !== false, displayOrder: Number(body.displayOrder) || 0 } }), { status: 201 });
+    }
+    if (resource === 'projects') {
+      return NextResponse.json(await prisma.project.create({ data: { title: body.title, slug: body.slug, description: body.description || '', imageUrl: body.imageUrl || null, url: body.url || null, category: body.category || null, technologies: body.technologies || [], published: body.published !== false, displayOrder: Number(body.displayOrder) || 0 } }), { status: 201 });
+    }
+    if (resource === 'promotions') {
+      return NextResponse.json(await prisma.promotion.create({ data: { title: body.title, description: body.description || '', imageUrl: body.imageUrl || null, ctaText: body.ctaText || null, ctaUrl: body.ctaUrl || null, published: body.published !== false, displayOrder: Number(body.displayOrder) || 0 } }), { status: 201 });
+    }
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  } catch {
+    return NextResponse.json({ error: 'Invalid data' }, { status: 400 });
+  }
+}
+
+export async function PATCH(req: Request, { params }: { params: Promise<{ resource: string }> }) {
+  try {
+    await requireAdmin();
+    const resource = (await params).resource;
+    const body = await req.json();
+    const { id, ...rest } = body;
+    if (typeof id !== 'string') return NextResponse.json({ error: 'Missing id' }, { status: 400 });
+    const data = { ...rest, displayOrder: Number(rest.displayOrder) || 0 };
+    if (resource === 'services') return NextResponse.json(await prisma.service.update({ where: { id }, data }));
+    if (resource === 'projects') return NextResponse.json(await prisma.project.update({ where: { id }, data }));
+    if (resource === 'promotions') return NextResponse.json(await prisma.promotion.update({ where: { id }, data }));
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  } catch {
+    return NextResponse.json({ error: 'Update failed' }, { status: 400 });
+  }
+}
+
+export async function DELETE(req: Request, { params }: { params: Promise<{ resource: string }> }) {
+  try {
+    await requireAdmin();
+    const resource = (await params).resource;
+    const { id } = await req.json();
+    if (resource === 'services') await prisma.service.delete({ where: { id } });
+    else if (resource === 'projects') await prisma.project.delete({ where: { id } });
+    else if (resource === 'promotions') await prisma.promotion.delete({ where: { id } });
+    else return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    return NextResponse.json({ ok: true });
+  } catch {
+    return NextResponse.json({ error: 'Delete failed' }, { status: 400 });
+  }
+}

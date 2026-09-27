@@ -42,3 +42,73 @@ Secrets are environment-only. Passwords are bcrypt-hashed. Admin routes require 
 
 ## Notes
 The existing bot is linked at `https://dr-honey-mini.vercel.app/`; this project does not rewrite it or invent a live-status API. Where no bot status API exists, the UI displays `LIVE STATUS UNAVAILABLE`.
+
+## Mobile navigation update
+
+The mobile navigation has been updated to remain fixed to the viewport while scrolling, with a stronger frosted-glass treatment, safe-area support, a raised center action, and a vertical ellipsis menu in the top header. The menu supports outside-click and Escape-key closing and prevents background scrolling while open.
+
+## UI update — glossy mobile navigation and interactions
+
+The latest UI revision keeps the bottom navigation fixed to the viewport and adds a raised center Bot action plus a Menu action. Public links use clean buttons/icons; destination URLs are intentionally not rendered as long text on the public UI. The three-dot/top menu opens with a slide/fade/blur transition, supports Escape/outside-click closing, and contains Light/Dark appearance controls.
+
+Interactive controls receive a subtle electric-blue click glow and touch particles. Cards expose additional details through animated `VIEW DETAILS` controls, and page content uses staggered slide-up reveal animations. Reduced-motion preferences are respected.
+
+The public UI also includes icon-only social buttons so long WhatsApp/Instagram/YouTube/Telegram URLs do not create horizontal overflow.
+
+## Admin panel deployment checklist
+
+The admin panel requires a real hosted PostgreSQL database. Vercel does not provide a permanent PostgreSQL database automatically.
+
+Set these Vercel Project Environment Variables for **Production, Preview and Development** as appropriate:
+
+- `DATABASE_URL`
+- `AUTH_SECRET`
+- `ADMIN_USERNAME`
+- `ADMIN_PASSWORD`
+- `NEXT_PUBLIC_SITE_URL`
+
+### First admin login on Vercel
+
+The login endpoint automatically creates the first administrator from `ADMIN_USERNAME` and `ADMIN_PASSWORD` when the database contains no administrator. This means you do not have to run the seed command on Vercel just to create the first login.
+
+After the first administrator exists, changing `ADMIN_PASSWORD` in Vercel does **not** overwrite the database password. Use the Admin → Settings password-change screen to change it.
+
+### Database initialization
+
+Before first use, run locally against the hosted database:
+
+```bash
+npm install
+npx prisma generate
+npx prisma migrate deploy
+npm run db:seed
+```
+
+If the database is already initialized and the first-admin bootstrap is used, the login can create the admin automatically, but the other CMS seed content still requires `npm run db:seed` or equivalent database initialization.
+
+### If `/admin` redirects to login
+
+Check that the login request returns `200`, then check the browser's cookies for `dr_honey_session`. Also verify `AUTH_SECRET` is set and that the deployment is using the same environment variables as the database connection.
+
+### If login returns 500/400
+
+Check the Vercel function logs. The most common cause is a missing/invalid `DATABASE_URL`, an unavailable PostgreSQL database, or missing `ADMIN_USERNAME` / `ADMIN_PASSWORD`.
+
+
+## Vercel admin recovery / fixed bootstrap login
+
+For the supplied recovery account, set these **exact values** in Vercel Project Settings → Environment Variables (Production + Preview if needed):
+
+- `ADMIN_USERNAME=DRHONEY05`
+- `ADMIN_PASSWORD=DRHONEY05TECHX804X05`
+- `ADMIN_FORCE_SYNC=true`
+
+Also set a real PostgreSQL `DATABASE_URL`, a 32+ character `AUTH_SECRET`, and `NEXT_PUBLIC_SITE_URL`. Do **not** put the password into Git or the source ZIP.
+
+The production build now runs `prisma migrate deploy` before `next build`, so the Prisma schema is applied during a Vercel build when the database is reachable. The login endpoint can bootstrap the first admin automatically. With `ADMIN_FORCE_SYNC=true`, the environment credentials can also recover a stale bootstrap password for the same username.
+
+After you successfully log in, you can change the password from **Admin → Settings**. For maximum security, set `ADMIN_FORCE_SYNC=false` after recovery so changing the Vercel environment password no longer synchronizes the database account.
+
+### If login still fails
+
+Open `/admin/login` and inspect the network response for `/api/admin/login`. The endpoint now returns a non-secret diagnostic code such as `ADMIN_BACKEND_UNAVAILABLE`, `AUTH_SECRET_INVALID`, `ADMIN_ENV_MISSING`, or `INVALID_CREDENTIALS`. Check the Vercel Function Logs and the corresponding environment variable.

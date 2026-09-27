@@ -1,0 +1,1 @@
+import { requireAdmin } from '@/lib/auth/admin'; import { AdminNav } from '@/components/admin/AdminNav'; import { ContentManager } from '@/components/admin/ContentManager'; export default async function Page(){await requireAdmin();return <section className="mx-auto max-w-7xl px-4 py-28"><AdminNav/><ContentManager resource="projects" label="Projects"/></section>}

@@ -144,3 +144,34 @@ html[data-theme='dark'] .approved-ai-pill { background: rgba(17,28,52,.72); bord
 @media (min-width: 768px) {
   .approved-home { min-height: 100vh; }
 }
+
+/* Mobile polish: preserve the 4:24 composition without squeezing or hiding controls. */
+@media (max-width: 767px) {
+  body:has(.approved-home) { overflow-x: hidden; overflow-y: auto; }
+  body::before { position: fixed; inset: 0; background-position: center, 74% center; background-size: auto, auto 88%; opacity: .72; }
+  .approved-home { height: auto; min-height: 100dvh; overflow: visible; display: block; padding-bottom: 1rem; }
+  .approved-hero { min-height: 64dvh; height: auto; padding: 7rem 1.1rem 2rem; display: flex; justify-content: center; }
+  .approved-kicker { max-width: 88%; padding: .65rem .9rem; font-size: .62rem; }
+  .approved-copy { padding-top: 1.7rem; }
+  .approved-copy h1 { font-size: clamp(3rem, 14vw, 5.8rem); line-height: .95; }
+  .approved-copy p { max-width: 94%; margin: 1.15rem 0 1.35rem; font-size: .92rem; line-height: 1.5; }
+  .approved-copy .inline-flex { min-height: 48px; padding-inline: 1.2rem; font-size: .86rem; }
+  .approved-home > section:nth-child(2) { padding: 1rem 1.1rem 1.5rem; }
+  .approved-feature-card { min-height: 235px; height: auto; padding: 1.25rem !important; border-radius: 1.25rem !important; }
+  .approved-icon { width: 54px; height: 54px; margin: 0 0 2rem; }
+  .approved-icon svg { width: 24px; height: 24px; }
+  .approved-feature-card h2 { font-size: .98rem; line-height: 1.2; }
+  .approved-feature-card p { margin-top: .65rem; font-size: .72rem; line-height: 1.45; }
+  .approved-card-arrow { right: 1rem; bottom: 1rem; width: 18px; }
+  .approved-home > section:nth-child(3) { padding: .25rem 1.1rem 2rem; }
+  .approved-connect { min-height: 94px; padding: 1rem !important; border-radius: 1.25rem !important; }
+  .approved-connect h2 { font-size: .9rem; }
+  .approved-connect p { margin-top: .35rem; font-size: .66rem; }
+  .approved-socials { gap: .35rem; }
+  .approved-social { width: 39px; height: 39px; border-radius: .8rem; }
+  .approved-social svg { width: 18px; height: 18px; }
+  .safe-bottom { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+  .ios-nav-item { min-width: 52px; min-height: 48px; }
+  .ios-nav-bot { min-width: 62px; }
+  .menu-panel { max-height: calc(100dvh - 5.4rem); overflow-y: auto; }
+}

@@ -16,7 +16,8 @@ function iconFor(name:string){
 }
 
 export default async function Contact(){
-  const links=(await getSocialLinks()).filter(link=>!/(github|email|mail)/i.test(link.name));
+  const allowed=['whatsapp','instagram','youtube','whatsapp channel','telegram'];
+  const links=(await getSocialLinks()).filter(link=>allowed.includes(link.name.toLowerCase()));
   return <section className="mx-auto max-w-4xl px-5 py-28">
     <p className="accent text-sm font-semibold tracking-[.2em]">CONTACT</p>
     <h1 className="mt-2 text-4xl font-black tracking-tight sm:text-5xl">Let&apos;s build something useful.</h1>

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight, Bot, BrainCircuit, Workflow } from 'lucide-react';
 import { getHero,getServices,getProjects,getBot } from '@/lib/db/content';
@@ -8,18 +7,14 @@ import { GlassButton } from '@/components/ui/GlassButton';
 export default async function Home(){
   const [hero,services,projects,bot]=await Promise.all([getHero(),getServices(),getProjects(),getBot()]);
   return <div>
-    <section className="relative mx-auto flex min-h-[78vh] max-w-6xl flex-col justify-center overflow-hidden px-5 py-24 lg:flex-row lg:items-center lg:gap-8">
-      <span className="ambient-orb ambient-orb-blue -left-16 top-24"/><span className="ambient-orb ambient-orb-violet right-0 top-8"/>
-      <div className="relative z-10 max-w-3xl lg:flex-1">
+    <section className="hero-shell relative mx-auto flex min-h-[78vh] max-w-6xl flex-col justify-center overflow-hidden px-5 py-24 lg:min-h-[84vh]">
+      <div className="hero-bg-art" aria-hidden="true"/><span className="ambient-orb ambient-orb-blue -left-16 top-24"/>
+      <div className="relative z-10 max-w-3xl">
         <div className="mb-5 flex items-center gap-2 text-sm font-semibold text-blue-600"><span className="h-2 w-2 animate-pulse rounded-full bg-blue-500 shadow-[0_0_18px_#60a5fa]"/>TECHNOLOGY • AUTOMATION • AI</div>
         <h1 className="max-w-4xl text-5xl font-black tracking-tight sm:text-7xl">{hero?.title||'DR HONEY TECH X'}</h1>
         <p className="mt-5 max-w-2xl text-lg text-slate-300">{hero?.subtitle||'WHATSAPP BOT DEVELOPER • AI • TECHNOLOGY'}</p>
         <p className="mt-4 max-w-2xl leading-7 text-slate-400">{hero?.description||'Professional WhatsApp bots, AI automation, websites and digital solutions built with a clean, modern engineering mindset.'}</p>
         <div className="mt-8 flex flex-wrap gap-3"><GlassButton href={bot?.externalUrl||'https://dr-honey-mini.vercel.app/'}>OPEN DR-HONEY-MINI <ArrowUpRight size={18}/></GlassButton><GlassButton href="/contact" variant="secondary">CONTACT DR HONEY</GlassButton></div>
-      </div>
-      <div className="relative z-10 mx-auto mt-8 w-full max-w-[360px] lg:mt-0 lg:flex-1">
-        <div className="absolute inset-8 rounded-full bg-blue-400/20 blur-3xl animate-pulse"/>
-        <Image src="/gojo-aura.webp" alt="Blue aura anime-inspired DR HONEY TECH X hero visual" width={768} height={1152} priority sizes="(max-width: 768px) 82vw, 360px" className="relative mx-auto w-full drop-shadow-[0_25px_45px_rgba(37,99,235,.22)] transition duration-700 hover:scale-[1.03]"/>
       </div>
     </section>
     <section className="mx-auto max-w-6xl px-5 py-12"><div className="grid gap-4 sm:grid-cols-3">{[[Bot,'WhatsApp Bots','Custom bot systems and command development.'],[BrainCircuit,'AI Development','AI-powered workflows and useful automation.'],[Workflow,'Automation','Digital processes designed to reduce repetitive work.']].map(([Icon,title,desc])=>{const I=Icon as typeof Bot;return <GlassCard key={String(title)}><I className="accent"/><h2 className="mt-4 text-xl font-bold">{title as string}</h2><p className="mt-2 text-sm leading-6 text-slate-400">{desc as string}</p></GlassCard>})}</div></section>
